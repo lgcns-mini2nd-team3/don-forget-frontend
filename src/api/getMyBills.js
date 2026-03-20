@@ -8,7 +8,7 @@ const api = axios.create({
 })
 
 
-const myBillApi = async() => {
+const getMyBills = async() => {
     const res = await api.get('/api/v1/my-bills', {
         headers : {
             "X-USER-ID" : "1"
@@ -18,4 +18,4 @@ const myBillApi = async() => {
     return res.data;
 }
 
-export default myBillApi;
+export default getMyBills;
