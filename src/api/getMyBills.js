@@ -28,3 +28,14 @@ export const getMyBillDetail = async(id) => {
 
     return res.data;
 }
+
+// 수정
+export const updateMyBill = async(id, payload) => {
+    const res = await api.patch(`/api/v1/my-bills/${id}`, payload,{
+        headers : {
+            "X-USER-ID" : "1"
+        }
+    })
+
+    return res.data;
+}

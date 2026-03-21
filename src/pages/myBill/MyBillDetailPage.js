@@ -1,10 +1,23 @@
 import { useEffect, useState } from 'react';
 import { getMyBillDetail } from '../../api/getMyBills';
 import { useNavigate, useParams } from 'react-router-dom';
+import { updateMyBill } from './../../api/getMyBills.js';
+
 
 const MyBillDetailPage = () => {
     const {id} = useParams();
     const[bill, setBill] = useState(null);
+    const[isEditing, setIsEditing] = useState(false);
+    const[formData, setFormData] = useState({
+        amount: "",
+        dueDay: "",
+        issue: "",
+        isRecurring: false,
+        recurCycle: "MONTHLY",
+        recurStart: "",
+        recurEnd: "",
+        notifyBefore: "",
+    });
 
     const navigate = useNavigate();
 
@@ -14,9 +27,20 @@ const MyBillDetailPage = () => {
             try{
                 const data = await getMyBillDetail(id);
                 console.log(data);
+
                 setBill(data);
+                setFormData({
+                    amount: data.amount ?? "",
+                    dueDay: data.dueDay ?? "",
+                    issueDay : data.issueDay ?? "",
+                    isRecurring: data.isRecurring ?? false,
+                    recurCycle: data.recurCycle ?? "MONTHLY",
+                    recurStart: data.recurStart ?? "",
+                    recurEnd: data.recurEnd ?? "",
+                    notifyBefore: data.notifyBefore ?? "",
+                })
             } catch(err){
-                console.log('err', err);
+                console.log('fetch data err', err);
             }
         }
         fetchData();
@@ -34,6 +58,90 @@ const MyBillDetailPage = () => {
                 return { label: "확인필요", color: "#475569", bg: "#f8fafc" };
         }
     };
+
+    const changeHandler = (e) => {
+        const { name, value, type, checked } = e.target;
+
+        setFormData((prev) => ({
+            ...prev, 
+            [name]: type === "checkbox" ? checked : value,
+        }));
+    }
+
+    const editModeHandler = () => {
+        setIsEditing(true);
+    }
+
+    const cancleModeHandler = () => {
+        if(!bill) return;
+        
+        setFormData({
+            amount: bill.amount ?? "",
+            dueDay: bill.dueDay ?? "",
+            issueDay : bill.issueDay ?? "",
+            isRecurring: bill.isRecurring ?? false,
+            recurCycle: bill.recurCycle ?? "MONTHLY",
+            recurStart: bill.recurStart ?? "",
+            recurEnd: bill.recurEnd ?? "",
+            notifyBefore: bill.notifyBefore ?? "",
+        })
+
+        setIsEditing(false);
+    }
+
+    const updateHandler = async() => {
+        try {
+            await updateMyBill(id, {
+                amount: Number(formData.amount),
+                dueDay: Number(formData.dueDay),
+                issueDay: Number(formData.issueDay),
+                isRecurring: formData.isRecurring,
+                recurCycle: formData.recurCycle,
+                recurStart: formData.recurStart || null,
+                recurEnd: formData.recurEnd || null,
+                notifyBefore: Number(formData.notifyBefore),
+            });
+
+            const updated = await getMyBillDetail(id);
+                setBill(updated);
+                setFormData({
+                amount: updated.amount ?? "",
+                dueDay: updated.dueDay ?? "",
+                issueDay: updated.issueDay ?? "",
+                isRecurring: updated.isRecurring ?? false,
+                recurCycle: updated.recurCycle ?? "MONTHLY",
+                recurStart: updated.recurStart ?? "",
+                recurEnd: updated.recurEnd ?? "",
+                notifyBefore: updated.notifyBefore ?? "",
+            });
+
+            setIsEditing(false);
+            alert("수정 완료");
+        } catch (err) {
+            console.error("update err:", err);
+            const message =
+            err.response?.data?.message || "수정 중 오류가 발생했습니다.";
+            alert(message);
+        }
+
+        
+console.log("formData:", formData);
+console.log("payload:", {
+  amount: Number(formData.amount),
+  dueDay: Number(formData.dueDay),
+  isRecurring: formData.isRecurring,
+  recurCycle: formData.recurCycle,
+  recurStart: formData.recurStart || null,
+  recurEnd: formData.recurEnd || null,
+  notifyBefore: Number(formData.notifyBefore),
+});
+
+
+
+
+
+    }
+
 
     if(!bill) return <div style={styles.loading}>로딩중...</div>
 
@@ -61,12 +169,32 @@ const MyBillDetailPage = () => {
                 <div style={styles.section}>
                     <div style={styles.row}>
                         <span style={styles.label}>금액</span>
-                        <span style={styles.value}>{bill.amount}원</span>
+                        {isEditing ? (
+                            <input
+                            type="number"
+                            name="amount"
+                            value={formData.amount}
+                            onChange={changeHandler}
+                            style={styles.input}
+                            />
+                        ) : (
+                            <span style={styles.value}>{bill.amount}원</span>
+                        )}
                     </div>
 
                     <div style={styles.row}>
                         <span style={styles.label}>납부일</span>
-                        <span style={styles.value}>매달 {bill.dueDay}일</span>
+                        {isEditing ? (
+                            <input
+                            type="number"
+                            name="dueDay"
+                            value={formData.dueDay}
+                            onChange={changeHandler}
+                            style={styles.input}
+                            />
+                        ) : (
+                            <span style={styles.value}>매달 {bill.dueDay}일</span>
+                        )}
                     </div>
 
                     <div style={styles.row}>
@@ -78,25 +206,65 @@ const MyBillDetailPage = () => {
                 <div style={styles.section}>
                     <div style={styles.row}>
                         <span style={styles.label}>반복 여부</span>
-                        <span style={styles.value}>
-                        {bill.isRecurring ? "예" : "아니오"}
-                        </span>
+                        {isEditing ? (
+                            <input
+                            type="checkbox"
+                            name="isRecurring"
+                            checked={formData.isRecurring}
+                            onChange={changeHandler}
+                            />
+                        ) : (
+                            <span style={styles.value}>{bill.isRecurring ? "예" : "아니오"}</span>
+                        )}
                     </div>
 
                     <div style={styles.row}>
                         <span style={styles.label}>반복 주기</span>
-                        <span style={styles.value}>{bill.recurCycle}</span>
+                        {isEditing ? (
+                            <select
+                            name="recurCycle"
+                            value={formData.recurCycle}
+                            onChange={changeHandler}
+                            style={styles.input}
+                            >
+                            <option value="MONTHLY">MONTHLY</option>
+                            <option value="BIMONTHLY">BIMONTHLY</option>
+                            <option value="QUARTERLY">QUARTERLY</option>
+                            <option value="YEARLY">YEARLY</option>
+                            </select>
+                        ) : (
+                            <span style={styles.value}>{bill.recurCycle}</span>
+                        )}
                     </div>
 
                     <div style={styles.row}>
                         <span style={styles.label}>알림</span>
-                        <span style={styles.value}>D-{bill.notifyBefore}</span>
+                        {isEditing ? (
+                            <input
+                            type="number"
+                            name="notifyBefore"
+                            value={formData.notifyBefore}
+                            onChange={changeHandler}
+                            style={styles.input}
+                            />
+                        ) : (
+                            <span style={styles.value}>D-{bill.notifyBefore}</span>
+                        )}
                     </div>
                 </div>
 
                 <div style={styles.buttonGroup}>
-                    <button style={styles.editBtn}>수정</button>
+                {isEditing ? (
+                    <>
+                    <button style={styles.editBtn} onClick={updateHandler}>저장</button>
+                    <button style={styles.cancelBtn} onClick={cancleModeHandler}>취소</button>
+                    </>
+                ) : (
+                    <>
+                    <button style={styles.editBtn} onClick={editModeHandler}>수정</button>
                     <button style={styles.deleteBtn}>삭제</button>
+                    </>
+                )}
                 </div>
             </div>
         </div>
@@ -108,6 +276,14 @@ export default MyBillDetailPage;
 
 
 const styles = {
+  input: {
+    width: "160px",
+    padding: "8px 10px",
+    border: "1px solid #cbd5e1",
+    borderRadius: "8px",
+    fontSize: "14px",
+  },
+
   container: {
     padding: "24px",
     display: "flex",
@@ -156,6 +332,15 @@ const styles = {
     display: "flex",
     gap: "10px",
     marginTop: "20px",
+  },
+  cancelBtn: {
+    flex: 1,
+    padding: "10px",
+    background: "#64748b",
+    color: "white",
+    border: "none",
+    borderRadius: "8px",
+    cursor: "pointer",
   },
   editBtn: {
     flex: 1,
