@@ -71,9 +71,9 @@ function MyBillPage() {
               <div key={item.invoiceId} style={styles.card}>
                 <div style={styles.cardTop}>
                   <div>
-                    <h3 style={styles.billTitle}>{item.title || item.invoiceTitle || '청구서명 없음'}</h3>
+                    <h3 style={styles.billTitle}>{item.name || '청구서명 없음'}</h3>
                     <p style={styles.billSubText}>
-                      납부일 {item.dueDate || item.due_day || '-'}
+                      납부일 {item.dueDay || '-'}
                     </p>
                   </div>
 
