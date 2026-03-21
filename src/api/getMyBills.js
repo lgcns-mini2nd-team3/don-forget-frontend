@@ -7,8 +7,8 @@ const api = axios.create({
     headers : { "Content-Type" : "application/json" }
 })
 
-
-const getMyBills = async() => {
+// 목록 조회
+export const getMyBills = async() => {
     const res = await api.get('/api/v1/my-bills', {
         headers : {
             "X-USER-ID" : "1"
@@ -18,4 +18,13 @@ const getMyBills = async() => {
     return res.data;
 }
 
-export default getMyBills;
+// 단건 조회
+export const getMyBillDetail = async(id) => {
+    const res = await api.get(`/api/v1/my-bills/${id}`, {
+        headers : {
+            "X-USER-ID" : "1"
+        }
+    })
+
+    return res.data;
+}

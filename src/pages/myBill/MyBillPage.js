@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
-import getMyBills from '../../api/getMyBills';
+import { getMyBills } from '../../api/getMyBills';
+import { useNavigate } from 'react-router-dom';
 
 function MyBillPage() {
   const[data, setData] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -104,7 +107,7 @@ function MyBillPage() {
                   </div>
 
                   <div style={styles.buttonGroup}>
-                    <button style={styles.detailButton}>상세보기</button>
+                    <button style={styles.detailButton} onClick={() => {navigate(`/myBills/${item.invoiceId}`)}}>상세보기</button>
                     <button style={styles.payButton}>납부처리</button>
                   </div>
                 </div>

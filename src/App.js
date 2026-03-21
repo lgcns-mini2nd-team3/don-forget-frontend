@@ -1,12 +1,13 @@
 import './App.css';
 import { useEffect } from 'react';
-import myBillApi from './api/getMyBills';
+import { getMyBills } from './api/getMyBills';
 import MyBillPage from './pages/myBill/MyBillPage';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import MyBillDetailPage from './pages/myBill/MyBillDetailPage';
 
 function App() {
   useEffect(() => {
-    myBillApi()
+    getMyBills()
       .then(console.log)
       .catch(err =>{
         console.log(err);
@@ -18,6 +19,7 @@ function App() {
       <Routes>
         {/* --- 헤더가 없는 페이지 그룹 --- */}
         <Route path="/myBills" element={<MyBillPage />} />
+        <Route path="/myBills/:id" element={<MyBillDetailPage />} />
       </Routes>
     </BrowserRouter>
   );
