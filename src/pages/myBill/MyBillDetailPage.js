@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getMyBillDetail } from '../../api/getMyBills';
+import { deleteMyBill, getMyBillDetail } from '../../api/getMyBills';
 import { useNavigate, useParams } from 'react-router-dom';
 import { updateMyBill } from './../../api/getMyBills.js';
 
@@ -123,23 +123,22 @@ const MyBillDetailPage = () => {
             err.response?.data?.message || "수정 중 오류가 발생했습니다.";
             alert(message);
         }
+    }
 
+    const deleteHandler = async() => {
+        const isConfirmed = window.confirm("정말 삭제하시겠습니까?");
         
-console.log("formData:", formData);
-console.log("payload:", {
-  amount: Number(formData.amount),
-  dueDay: Number(formData.dueDay),
-  isRecurring: formData.isRecurring,
-  recurCycle: formData.recurCycle,
-  recurStart: formData.recurStart || null,
-  recurEnd: formData.recurEnd || null,
-  notifyBefore: Number(formData.notifyBefore),
-});
+        if(!isConfirmed) return;
 
+        try{
+            await deleteMyBill(id)
 
-
-
-
+            navigate("/myBills");
+        } catch(err){
+            console.log("delete err:" , err);
+            const message = err.response?.data?.message || "삭제 중 오류가 발생했습니다.";
+            alert(message);
+        }
     }
 
 
@@ -262,7 +261,7 @@ console.log("payload:", {
                 ) : (
                     <>
                     <button style={styles.editBtn} onClick={editModeHandler}>수정</button>
-                    <button style={styles.deleteBtn}>삭제</button>
+                    <button style={styles.deleteBtn} onClick={deleteHandler}>삭제</button>
                     </>
                 )}
                 </div>
