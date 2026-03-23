@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
-import getMyBills from '../../api/getMyBills';
+import { getMyBills } from '../../api/getMyBills';
+import { useNavigate } from 'react-router-dom';
 
 function MyBillPage() {
   const[data, setData] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,7 +37,7 @@ function MyBillPage() {
           <p style={styles.subTitle}>나의 공과금</p>
           <h1 style={styles.title}>청구서 관리</h1>
         </div>
-        <button style={styles.addButton}>+ 청구서 추가</button>
+        <button style={styles.addButton} onClick={() => navigate("/myBills/create")}>+ 청구서 추가</button>
       </div>
 
       <div style={styles.summaryRow}>
@@ -71,9 +74,9 @@ function MyBillPage() {
               <div key={item.invoiceId} style={styles.card}>
                 <div style={styles.cardTop}>
                   <div>
-                    <h3 style={styles.billTitle}>{item.title || item.invoiceTitle || '청구서명 없음'}</h3>
+                    <h3 style={styles.billTitle}>{item.name || '청구서명 없음'}</h3>
                     <p style={styles.billSubText}>
-                      납부일 {item.dueDate || item.due_day || '-'}
+                      납부일 {item.dueDay || '-'}
                     </p>
                   </div>
 
@@ -104,7 +107,7 @@ function MyBillPage() {
                   </div>
 
                   <div style={styles.buttonGroup}>
-                    <button style={styles.detailButton}>상세보기</button>
+                    <button style={styles.detailButton} onClick={() => {navigate(`/myBills/${item.invoiceId}`)}}>상세보기</button>
                     <button style={styles.payButton}>납부처리</button>
                   </div>
                 </div>
