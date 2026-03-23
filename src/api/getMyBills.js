@@ -10,6 +10,13 @@ const api = axios.create({
     }
 })
 
+// 생성
+export const createMyBill = async(payload) => {
+    const res = await api.post('/api/v1/my-bills', payload);
+    
+    return res.data;
+}
+
 // 목록 조회
 export const getMyBills = async() => {
     const res = await api.get('/api/v1/my-bills')

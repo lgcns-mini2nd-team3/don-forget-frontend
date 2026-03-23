@@ -37,7 +37,7 @@ function MyBillPage() {
           <p style={styles.subTitle}>나의 공과금</p>
           <h1 style={styles.title}>청구서 관리</h1>
         </div>
-        <button style={styles.addButton}>+ 청구서 추가</button>
+        <button style={styles.addButton} onClick={() => navigate("/myBills/create")}>+ 청구서 추가</button>
       </div>
 
       <div style={styles.summaryRow}>
