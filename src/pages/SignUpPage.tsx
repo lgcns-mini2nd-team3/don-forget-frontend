@@ -114,9 +114,9 @@ export function Signup() {
 
           <FullWidth>
             {/* 버튼 컴포넌트가 variant에 purple이 없어서, className으로 커스텀 하던 걸 styled wrapper로 대체 */}
-            <PurpleButton type="submit" variant="primary" size="lg">
+            <BLueButton type="submit" variant="primary" size="lg">
               회원가입
-            </PurpleButton>
+            </BLueButton>
           </FullWidth>
         </Form>
 
@@ -155,7 +155,7 @@ const Page = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(to bottom right, #faf5ff, #f3e8ff); /* purple-50 -> purple-100 */
+  background: linear-gradient(to bottom right, #eff6ff, #dbeafe); /* blue-50 -> blue-100 */
 `;
 
 const Card = styled.div`
@@ -277,14 +277,14 @@ const FullWidth = styled.div`
   width: 100%;
 `;
 
-const PurpleButton = styled(Button)`
+const BLueButton = styled(Button)`
   width: 100%;
 
   /* 기존: className="w-full !bg-purple-600 hover:!bg-purple-700" 대체 */
-  background: #9333ea !important;
+  background:  rgba(59, 130, 246, 0.9) !important;
 
   &:hover {
-    background: #7e22ce !important;
+    background:  rgba(59, 130, 246, 0.9) !important;
   }
 `;
 

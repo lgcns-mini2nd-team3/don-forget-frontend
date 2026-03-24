@@ -4,6 +4,7 @@ import HomePage from "../pages/HomePage";
 import { LoginPage } from "../pages/LoginPage";
 import { Signup } from "../pages/SignUpPage";
 import TemplatesPage from "../pages/TemplatesPage";
+import MyInfoPage from "../pages/MyPage";
 
 function AppRouter() {
   return (
@@ -19,6 +20,9 @@ function AppRouter() {
         <Route path="/signup" element={<Signup />} />
         {/* 템플릿 페이지 */}
         <Route path="/templates" element={<TemplatesPage />} />
+        {/* 내 정보 페이지 */}
+        <Route path="/mypage" element={<MyInfoPage />} />
+        
       </Routes>
     </BrowserRouter>
   );
