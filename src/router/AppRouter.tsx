@@ -4,10 +4,12 @@ import HomePage from "../pages/HomePage";
 import { LoginPage } from "../pages/LoginPage";
 import { Signup } from "../pages/SignUpPage";
 import TemplatesPage from "../pages/TemplatesPage";
+import { TopBar } from "../components/TopBar";
 
 function AppRouter() {
   return (
     <BrowserRouter>
+      <TopBar title="Don-Forget" unreadCount={3} />
       <Routes>
         {/* 결제 페이지 */}
         <Route path="/payments" element={<PaymentsPage />} />
