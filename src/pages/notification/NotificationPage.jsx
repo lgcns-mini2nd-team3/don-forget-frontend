@@ -7,9 +7,13 @@ import "./Notification.css";
 const NotificationPage = () => {
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
-  const userId = 1;
+  const userId = localStorage.getItem("userId") || 1;
 
   const loadData = async () => {
+    if (!userId) {
+      console.error("로그인이 필요합니다.");
+      return;
+    }
     try {
       const [listRes, countRes] = await Promise.all([
         notificationApi.getNotifications(userId),
