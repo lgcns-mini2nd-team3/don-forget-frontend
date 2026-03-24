@@ -46,7 +46,7 @@ function MyBillPage() {
           <strong style={styles.summaryValue}>{data.length}건</strong>
         </div>
 
-        <div style={styles.summaryCard}>
+        {/* <div style={styles.summaryCard}>
           <p style={styles.summaryLabel}>미납</p>
           <strong style={styles.summaryValue}>
             {data.filter((item) => item.status === 'UNPAID').length}건
@@ -58,7 +58,7 @@ function MyBillPage() {
           <strong style={{ ...styles.summaryValue, color: '#dc2626' }}>
             {data.filter((item) => item.status === 'OVERDUE').length}건
           </strong>
-        </div>
+        </div> */}
       </div>
 
       <div style={styles.listWrap}>
@@ -80,7 +80,7 @@ function MyBillPage() {
                     </p>
                   </div>
 
-                  <span
+                  {/* <span
                     style={{
                       ...styles.badge,
                       color: statusInfo.color,
@@ -88,7 +88,7 @@ function MyBillPage() {
                     }}
                   >
                     {statusInfo.label}
-                  </span>
+                  </span> */}
                 </div>
 
                 <div style={styles.amountRow}>
@@ -106,10 +106,10 @@ function MyBillPage() {
                     </span>
                   </div>
 
-                  <div style={styles.buttonGroup}>
+                  {/* <div style={styles.buttonGroup}>
                     <button style={styles.detailButton} onClick={() => {navigate(`/myBills/${item.invoiceId}`)}}>상세보기</button>
                     <button style={styles.payButton}>납부처리</button>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             );

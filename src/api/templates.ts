@@ -24,14 +24,14 @@ export interface TemplateRequest {
 }
 
 export const getTemplates = async (category?: string) => {
-  const response = await api.get<Template[]>("/api/v1/templates", {
+  const response = await api.get<Template[]>("template-service/api/v1/templates", {
     params: category ? { category } : {},
   });
   return response.data;
 };
 
 export const createTemplate = async (payload: TemplateRequest) => {
-  const response = await api.post<Template>("/api/v1/templates", payload);
+  const response = await api.post<Template>("template-service/api/v1/templates", payload);
   return response.data;
 };
 
@@ -40,12 +40,12 @@ export const updateTemplate = async (
   payload: TemplateRequest
 ) => {
   const response = await api.patch<Template>(
-    `/api/v1/templates/${templateId}`,
+    `template-service/api/v1/templates/${templateId}`,
     payload
   );
   return response.data;
 };
 
 export const deleteTemplate = async (templateId: number) => {
-  await api.delete(`/api/v1/templates/${templateId}`);
+  await api.delete(`template-service/api/v1/templates/${templateId}`);
 };

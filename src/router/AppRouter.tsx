@@ -26,11 +26,10 @@ function AppRouter() {
         {/* 템플릿 페이지 */}
         <Route path="/templates" element={<TemplatesPage />} />
         {/* 내 청구서 페이지 */}
-        <Route path="/my-bills" element={<MyBillPage />}>
-          <Route path="create" element={<MyBillCreatePage />} />
-          <Route path="detail" element={<MyBillDetailPage />} />
+        <Route path="/myBills" element={<MyBillPage />}>
         </Route>
-        <Route path="/templates" element={<TemplatesPage />} />
+        <Route path="/myBills/create" element={<MyBillCreatePage />} />
+        <Route path="/myBills/:id" element={<MyBillDetailPage />} />
         <Route path="/notifications" element={<NotificationsPage />} />
       </Routes>
     </BrowserRouter>

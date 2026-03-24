@@ -39,7 +39,7 @@ export function TopBar({
           </NavLink>
 
           <NavLink
-            to="/my-bills"
+            to="/myBills"
             className={({ isActive }) => `navItem ${isActive ? "active" : ""}`}
           >
             내 청구서
