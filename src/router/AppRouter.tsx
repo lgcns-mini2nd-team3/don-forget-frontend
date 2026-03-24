@@ -5,6 +5,10 @@ import { LoginPage } from "../pages/LoginPage";
 import { Signup } from "../pages/SignUpPage";
 import TemplatesPage from "../pages/TemplatesPage";
 import { TopBar } from "../components/TopBar";
+import MyBillPage from "../pages/myBill/MyBillPage";
+import MyBillCreatePage from "../pages/myBill/MyBillCreatePage";
+import MyBillDetailPage from "../pages/myBill/MyBillDetailPage";
+import NotificationsPage from "../pages/notification/NotificationPage";
 
 function AppRouter() {
   return (
@@ -21,6 +25,13 @@ function AppRouter() {
         <Route path="/signup" element={<Signup />} />
         {/* 템플릿 페이지 */}
         <Route path="/templates" element={<TemplatesPage />} />
+        {/* 내 청구서 페이지 */}
+        <Route path="/my-bills" element={<MyBillPage />}>
+          <Route path="create" element={<MyBillCreatePage />} />
+          <Route path="detail" element={<MyBillDetailPage />} />
+        </Route>
+        <Route path="/templates" element={<TemplatesPage />} />
+        <Route path="/notifications" element={<NotificationsPage />} />
       </Routes>
     </BrowserRouter>
   );
