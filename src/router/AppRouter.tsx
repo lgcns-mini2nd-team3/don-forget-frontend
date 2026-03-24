@@ -16,7 +16,6 @@ function AppRouter() {
         <Route path="/login" element={<LoginPage />} />
         {/* 회원가입 페이지 */}
         <Route path="/signup" element={<Signup />} />
-
       </Routes>
     </BrowserRouter>
   );
