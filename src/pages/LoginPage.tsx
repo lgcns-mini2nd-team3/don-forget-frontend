@@ -12,7 +12,7 @@ export function LoginPage() {
 const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
   try {
-    const res = await api.post("/user-service/api/v1/auth/login", { email, password });
+    const res = await api.post("/user-service/api/v1/users/login", { email, password });
     const token = res.data.access; // 키 확인 필요
     localStorage.setItem("token", token);
     navigate("/");
