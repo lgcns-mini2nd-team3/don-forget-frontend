@@ -6,6 +6,8 @@ import { Signup } from "../pages/SignUpPage";
 import TemplatesPage from "../pages/TemplatesPage";
 import MyInfoPage from "../pages/MyPage";
 
+import ExternalHistoryPage from "../pages/external/ExternalHistoryPage"; 
+
 function AppRouter() {
   return (
     <BrowserRouter>
@@ -22,6 +24,9 @@ function AppRouter() {
         <Route path="/templates" element={<TemplatesPage />} />
         {/* 내 정보 페이지 */}
         <Route path="/mypage" element={<MyInfoPage />} />
+
+        {/* 2. 외부 고지서 내역 페이지 경로*/}
+        <Route path="/external/history" element={<ExternalHistoryPage />} />
         
       </Routes>
     </BrowserRouter>
