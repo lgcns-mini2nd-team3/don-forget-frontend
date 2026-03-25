@@ -26,7 +26,7 @@ export function Signup() {
       return;
     }
 
-    api.post("/user-service/api/v1/auth/signup", {
+    api.post("/user-service/api/v1/users/signup", {
       name,
       email,
       password
