@@ -9,6 +9,9 @@ import MyBillPage from "../pages/myBill/MyBillPage";
 import MyBillCreatePage from "../pages/myBill/MyBillCreatePage";
 import MyBillDetailPage from "../pages/myBill/MyBillDetailPage";
 import NotificationsPage from "../pages/notification/NotificationPage";
+import MyInfoPage from "../pages/MyPage";
+
+import ExternalHistoryPage from "../pages/external/ExternalHistoryPage"; 
 
 function AppRouter() {
   return (
@@ -31,6 +34,12 @@ function AppRouter() {
         <Route path="/myBills/create" element={<MyBillCreatePage />} />
         <Route path="/myBills/:id" element={<MyBillDetailPage />} />
         <Route path="/notifications" element={<NotificationsPage />} />
+        {/* 내 정보 페이지 */}
+        <Route path="/mypage" element={<MyInfoPage />} />
+
+        {/* 2. 외부 고지서 내역 페이지 경로*/}
+        <Route path="/external/history" element={<ExternalHistoryPage />} />
+        
       </Routes>
     </BrowserRouter>
   );
