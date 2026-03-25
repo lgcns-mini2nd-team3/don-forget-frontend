@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:8085/api/v1/notifications";
+const API_BASE_URL = "https://server.don-forget.shop/api/v1/notifications";
 
 export const notificationApi = {
   // 알림 목록 조회
